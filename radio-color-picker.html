@@ -1,0 +1,129 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-iconset-svg/iron-iconset-svg.html">
+
+<iron-iconset-svg name="radiocolorpicker" size="24">
+  <svg>
+    <defs>
+      <g id="check"><path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></g>
+    </defs>
+  </svg>
+</iron-iconset-svg>
+
+<!--
+`radio-color-picker`
+
+A color picker that is a list of circle colors. When a color is selected, a checkmark is applied to it.
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--radio-color-picker-color-padding` | The padding around a color circle. | `12px`
+`--radio-color-picker-color` | The styling applied to each color circle. | `{}`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="radio-color-picker">
+  <template>
+    <style>
+     .grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      
+      .color {
+        padding: var(--radio-color-picker-color-padding, 12px);
+      }
+      
+      .color-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        @apply(--radio-color-picker-color);
+      }
+
+    </style>
+    <div class="grid">
+      <template is="dom-repeat"
+                items="[[colors]]"
+                as="color">
+        <div class="color">
+          <div class="color-circle"
+               style="background-color:[[color]]"
+               on-tap="_colorTapped">
+            <iron-icon id="c[[index]]"
+                       hidden
+                       icon="radiocolorpicker:check"></iron-icon>
+          </div>
+        </div>
+      </template>
+  </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'radio-color-picker',
+
+      properties: {
+        /**
+         * An array of the hex values that can be selected from.
+         */
+        colors: {
+          type: Array,
+          notify: true,
+          reflectToAttribute: true,
+          value: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548'],
+        },
+        /**
+         * The selected color index value.
+         */
+        selectedIndex: {
+          type: Number,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_selectedIndexChanged'
+        },
+        /**
+         * The selected color hex value.
+         */
+        selected: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_selectedChanged',
+        }
+      },
+
+      selectColor: function(index) {
+        if (this.selectedIndex !== undefined && this.selectedIndex !== null) {
+          if (this.selectedIndex === index) {
+            return;
+          }
+          var oldSelectedElement = this.$$('#c' + this.selectedIndex);
+          oldSelectedElement.hidden = true;
+        }
+        var newSelectedElement = this.$$('#c' + index);
+        newSelectedElement.hidden = false;
+        this.selectedIndex = index;
+        this.selected = this.colors[index];
+      },
+      _colorTapped: function(e) {
+        this.selectColor(this.colors.indexOf(e.model.color))
+      },
+      _selectedChanged: function() {
+        this.selectColor(this.colors.indexOf(this.selected));
+      },
+      _selectedIndexChanged: function() {
+        this.selectColor(this.selectedIndex);
+      },
+    });
+  </script>
+</dom-module>
