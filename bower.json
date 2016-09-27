@@ -1,14 +1,25 @@
 {
   "name": "radio-color-picker",
-  "version": "1.0.1",
-  "description": "A color picker that is a list of circle colors. When a color is selected, a checkmark is applied to it.",
+  "version": "1.0.2",
+  "description": "A Polymer color picker that is a list of circle colors. When a color is selected, a checkmark is applied to the circle.",
   "authors": [
     "Atish Patel"
   ],
   "license": "MIT",
   "main": "radio-color-picker.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.6.0"
+  },
+  "keywords": [
+    "color",
+    "picker",
+    "radio",
+    "polymer",
+    "web-components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atishpatel/radio-color-picker"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
