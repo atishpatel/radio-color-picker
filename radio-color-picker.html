@@ -14,12 +14,39 @@
 <!--
 `radio-color-picker`
 
-A color picker that is a list of circle colors. When a color is selected, a checkmark is applied to it.
+A Polymer color picker that is a list of colors. When a color is selected, a checkmark is applied to the color button.
 
 Custom property | Description | Default
 ----------------|-------------|----------
 `--radio-color-picker-color-padding` | The padding around a color circle. | `12px`
+`--radio-color-picker-grid` | The styling applied to the grid of color picker. | `{}`
 `--radio-color-picker-color` | The styling applied to each color circle. | `{}`
+`--radio-color-picker-color-hover` | The styling applied to each color circle on hover. | `{}`
+
+If you want to add shadow and hover effect, use something like the following:
+```
+--radio-color-picker-color: {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+--radio-color-picker-color-hover: {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+```
+
+If you want square buttons instead of circle, use the following:
+```
+--radio-color-picker-color: {
+  border-radius: 0;
+}
+```
+
+If you want to display as a column instead of a row, use the following:
+```
+--radio-color-picker-grid: {
+  flex-direction: column;
+}
+```
 
 @demo demo/index.html 
 -->
@@ -31,6 +58,7 @@ Custom property | Description | Default
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        @apply(--radio-color-picker-grid);
       }
       
       .color {
@@ -47,6 +75,10 @@ Custom property | Description | Default
         align-items: center;
         color: white;
         @apply(--radio-color-picker-color);
+      }
+
+      .color-circle:hover {
+        @apply(--radio-color-picker-color-hover);
       }
 
     </style>
