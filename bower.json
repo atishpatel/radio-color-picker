@@ -1,9 +1,11 @@
 {
   "name": "radio-color-picker",
+  "version": "1.0.1",
   "description": "A color picker that is a list of circle colors. When a color is selected, a checkmark is applied to it.",
   "authors": [
     "Atish Patel"
   ],
+  "license": "MIT",
   "main": "radio-color-picker.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0"
