@@ -18,8 +18,7 @@ A Polymer color picker that is a list of colors. When a color is selected, a che
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--radio-color-picker-color-padding` | The padding around a color circle. | `12px`
-`--radio-color-picker-grid` | The styling applied to the grid of color picker. | `{}`
+`--radio-color-picker-color-padding` | The padding around a color circle. | `0 24px 24px 0`
 `--radio-color-picker-color` | The styling applied to each color circle. | `{}`
 `--radio-color-picker-color-hover` | The styling applied to each color circle on hover. | `{}`
 
@@ -43,7 +42,7 @@ If you want square buttons instead of circle, use the following:
 
 If you want to display as a column instead of a row, use the following:
 ```
---radio-color-picker-grid: {
+radio-color-picker: {
   flex-direction: column;
 }
 ```
@@ -54,15 +53,14 @@ If you want to display as a column instead of a row, use the following:
 <dom-module id="radio-color-picker">
   <template>
     <style>
-     .grid {
+     :host {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        @apply(--radio-color-picker-grid);
       }
       
       .color {
-        padding: var(--radio-color-picker-color-padding, 12px);
+        padding: var(--radio-color-picker-color-padding, 0 24px 24px 0);
       }
       
       .color-circle {
@@ -82,7 +80,6 @@ If you want to display as a column instead of a row, use the following:
       }
 
     </style>
-    <div class="grid">
       <template is="dom-repeat"
                 items="[[colors]]"
                 as="color">
@@ -96,7 +93,6 @@ If you want to display as a column instead of a row, use the following:
           </div>
         </div>
       </template>
-  </div>
   </template>
 
   <script>
@@ -133,8 +129,14 @@ If you want to display as a column instead of a row, use the following:
           observer: '_selectedChanged',
         }
       },
-
       selectColor: function(index) {
+        var newSelectedElement = this.$$('#c' + index);
+        if (newSelectedElement === undefined || newSelectedElement === null) {
+          this.async(function() {
+            this.selectColor(index)
+          }.bind(this), 300);
+          return;
+        }
         if (this.selectedIndex !== undefined && this.selectedIndex !== null) {
           if (this.selectedIndex === index) {
             return;
@@ -142,7 +144,6 @@ If you want to display as a column instead of a row, use the following:
           var oldSelectedElement = this.$$('#c' + this.selectedIndex);
           oldSelectedElement.hidden = true;
         }
-        var newSelectedElement = this.$$('#c' + index);
         newSelectedElement.hidden = false;
         this.selectedIndex = index;
         this.selected = this.colors[index];
