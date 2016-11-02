@@ -85,7 +85,7 @@ radio-color-picker: {
                 as="color">
         <div class="color">
           <div class="color-circle"
-               style="background-color:[[color]]"
+               style$="background-color:[[color]]"
                on-tap="_colorTapped">
             <iron-icon id="c[[index]]"
                        hidden
@@ -130,6 +130,9 @@ radio-color-picker: {
         }
       },
       selectColor: function(index) {
+        if (index < 0) {
+          return;
+        }
         var newSelectedElement = this.$$('#c' + index);
         if (newSelectedElement === undefined || newSelectedElement === null) {
           this.async(function() {

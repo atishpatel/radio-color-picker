@@ -1,6 +1,6 @@
 {
   "name": "radio-color-picker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Polymer color picker that is a list of colors. When a color is selected, a checkmark is applied to the color button.",
   "authors": [
     "Atish Patel"
